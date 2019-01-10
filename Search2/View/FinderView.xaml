@@ -1,0 +1,72 @@
+﻿<UserControl
+    x:Class="Search2.View.FinderView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
+    <!--<ContentPresenter Content="{Binding Path=Element}" />-->
+    <Canvas>
+        <Rectangle
+            Canvas.Left="{Binding Path=LeftTop.X}"
+            Canvas.Top="{Binding Path=LeftTop.Y}"
+            Width="{Binding Path=Width}"
+            Height="{Binding Path=Height}"
+            DataContext="{Binding Path=FinderRectangle}"
+            Stroke="{Binding Path=Color}"
+            StrokeDashArray="5"
+            StrokeDashCap="Round"
+            StrokeLineJoin="Round"
+            StrokeThickness="2" />
+
+        <ItemsControl
+            Canvas.Left="{Binding Path=FinderRectangle.LeftTop.X}"
+            Canvas.Top="{Binding Path=FinderRectangle.LeftTop.Y}"
+            Margin="2"
+            ItemsSource="{Binding Path=Collection}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!--<Rectangle
+                        Width="5"
+                        Height="5"
+                        Fill="Black">
+                        <Rectangle.RenderTransform>
+                            <TranslateTransform X="{Binding Path=LeftTop.Y, FallbackValue=0}" Y="{Binding Path=LeftTop.X, FallbackValue=0}" />
+                        </Rectangle.RenderTransform>
+                    </Rectangle>-->
+                    <Image
+                        Source="{Binding Path=Image}">
+                        <Image.RenderTransform>
+                            <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
+                        </Image.RenderTransform>
+                    </Image>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel
+            Canvas.Left="{Binding Path=FinderRectangle.LeftTop.X}"
+            Canvas.Top="{Binding Path=FinderRectangle.NextTop}"
+            Orientation="Vertical">
+
+            <!--<TextBlock
+                Canvas.Left="{Binding Path=Left}"
+                Canvas.Top="{Binding Path=NextTop}"
+                FontFamily="{StaticResource HeaderFontFamily}"
+                FontSize="20"
+                Foreground="Red"
+                Text="Рабочая зона" />-->
+
+            <mah:MetroProgressBar
+                Foreground="Red"
+                Maximum="100"
+                Value="{Binding Path=Progress}" 
+                Width="150"/>
+        </StackPanel>
+
+    </Canvas>
+</UserControl>
+
