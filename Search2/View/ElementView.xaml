@@ -34,13 +34,14 @@
                     <Rectangle
                         Width="{Binding Path=Width}"
                         Height="{Binding Path=Height}"
-                        RadiusX="3"
-                        RadiusY="3"
-                        Stroke="Red"
+                        RadiusX="0"
+                        RadiusY="0"
+                        Stroke="OrangeRed"
+                        Fill="OrangeRed"
                         StrokeDashArray="0"
                         StrokeDashCap="Round"
                         StrokeLineJoin="Round"
-                        StrokeThickness="2">
+                        StrokeThickness="0">
                         <Rectangle.RenderTransform>
                             <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
                         </Rectangle.RenderTransform>
