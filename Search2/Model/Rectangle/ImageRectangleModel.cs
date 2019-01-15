@@ -1,6 +1,7 @@
+using System.Drawing;
 using System.Windows.Media.Imaging;
 
-namespace Search2.Model
+namespace Search2.Model.Rectangle
 {
     public class ImageRectangleModel : RectangleModel
     {
@@ -17,6 +18,10 @@ namespace Search2.Model
                     NotifyOfPropertyChange(() => Image);
                 }
             }
+        }
+
+        public ImageRectangleModel(Point leftTop, int height, int width) : base(leftTop, height, width)
+        {
         }
     }
 }

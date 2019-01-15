@@ -74,6 +74,9 @@
     <Reference Include="Emgu.CV.World, Version=3.1.0.2282, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <HintPath>..\packages\EmguCV.3.1.0.1\lib\net30\Emgu.CV.World.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -114,16 +117,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\FinderRectangleModel.cs" />
-    <Compile Include="Model\ImageRectangleModel.cs" />
-    <Compile Include="Model\RectangleModel.cs" />
-    <Compile Include="View\FinderView.xaml.cs">
-      <DependentUpon>FinderView.xaml</DependentUpon>
+    <Compile Include="Static\ImageEx.cs" />
+    <Compile Include="ViewModel\FinderViewModel.cs" />
+    <Compile Include="Model\Rectangle\AreaRectangleModel.cs" />
+    <Compile Include="Model\Rectangle\ImageRectangleModel.cs" />
+    <Compile Include="Model\Rectangle\RectangleModel.cs" />
+    <Compile Include="Static\EnumExtension.cs" />
+    <Compile Include="Static\EqualityComparer.cs" />
+    <Compile Include="Model\BitmapComparer\IBitmapComparer.cs" />
+    <Compile Include="Model\BitmapComparer\TemplateBitmapComparer.cs" />
+    <Compile Include="Static\Logger.cs" />
+    <Compile Include="Static\StopwatchOperation.cs" />
+    <Compile Include="Static\TimerExtension.cs" />
+    <Compile Include="View\ElementView.xaml.cs">
+      <DependentUpon>ElementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Static\WorkScreen.cs" />
-    <Page Include="View\FinderView.xaml">
+    <Page Include="View\ElementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,7 +147,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\ElementModel.cs" />
+    <Compile Include="ViewModel\ElementViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -2,13 +2,8 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Windows.Media.Imaging;
-using Emgu.CV;
-using Emgu.CV.Structure;
-using Search2.Model;
+using Search2.Model.Rectangle;
 
 namespace Search2.Static
 {
@@ -32,23 +27,24 @@ namespace Search2.Static
             public readonly int Right;
             public readonly int Bottom;
         }
-        
-        public static void SaveImageFromScreen(Point startPoint, int width, int height)
+
+        public static void SaveFromScreen(RectangleModel rectangle)
         {
-            var printscreen = new Bitmap(width - 4, height - 4);
+            if (rectangle.Height < 5)
+                throw new ArgumentOutOfRangeException(nameof(rectangle.Height));
+            if (rectangle.Width < 5)
+                throw new ArgumentOutOfRangeException(nameof(rectangle.Width));
+
+            var printscreen = new Bitmap(rectangle.Width - 4, rectangle.Height - 4);
 
             var graphics = Graphics.FromImage(printscreen);
 
-            graphics.CopyFromScreen(startPoint.X + 2, startPoint.Y + 2, 0, 0, printscreen.Size);
+            graphics.CopyFromScreen(rectangle.LeftTop.X + 2, rectangle.LeftTop.Y + 2, 0, 0, printscreen.Size);
 
-            printscreen.Save($"{DateTime.Now:dd.MM.yyyy HH-mm-ss}.png",ImageFormat.Png);
-        }
-        public static void SaveImage(Bitmap bitmap)
-        {
-            bitmap.Save($"{DateTime.Now:dd.MM.yyyy HH-mm-ss}.png", ImageFormat.Png);
+            printscreen.Save($"{DateTime.Now:dd.MM.yyyy HH-mm-ss}.png", ImageFormat.Png);
         }
 
-        public static Bitmap GetImageFromProcess(Process process)
+        public static Bitmap GetBitmapFromProcess(Process process)
         {
             try
             {
@@ -71,12 +67,14 @@ namespace Search2.Static
 
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Log.Error($"{nameof(GetBitmapFromProcess)}", ex);
                 return null;
             }
         }
-        public static Bitmap GetImageFromProcessName(string name)
+
+        public static Bitmap GetBitmapFromProcess(string name)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException(name);
@@ -84,60 +82,73 @@ namespace Search2.Static
             IntPtr handle = FindWindow(null, name);
 
             GetWindowRect(handle, out var rect);
-            Rectangle gameScreenRect = new Rectangle(rect.Left + 2, rect.Top + 2, rect.Right - rect.Left-4, rect.Bottom - rect.Top - 4);
+            var gameScreenRect = new RectangleModel(leftTop: new Point(rect.Left + 2, rect.Top + 2),
+                height: rect.Bottom - rect.Top - 4, width: rect.Right - rect.Left - 4);
 
-            Bitmap gameBmp = GetImageFromScreenRectange(gameScreenRect);
+            var gameBmp = GetBitmapFromScreen(gameScreenRect);
 
             return gameBmp;
         }
-        public static Bitmap GetImageFromScreenRectange(Point startPoint, int width, int height)
+
+        public static Bitmap GetBitmapFromScreen(RectangleModel rectangle)
         {
-            var printscreen = new Bitmap(width-4, height - 4);
+            if (rectangle.Height < 5)
+                throw new ArgumentOutOfRangeException(nameof(rectangle.Height));
+            if (rectangle.Width < 5)
+                throw new ArgumentOutOfRangeException(nameof(rectangle.Width));
 
-            var graphics = Graphics.FromImage(printscreen);
+            var printscreen = new Bitmap(rectangle.Width - 4, rectangle.Height - 4);
 
-            graphics.CopyFromScreen(startPoint.X+2, startPoint.Y+2, 0, 0, printscreen.Size);
+            using (var graphics = Graphics.FromImage(printscreen))
+            {
+                graphics.CopyFromScreen(rectangle.LeftTop.X + 2, rectangle.LeftTop.Y + 2, 0, 0, printscreen.Size,
+                    CopyPixelOperation.SourceCopy);
+            }
 
             return printscreen;
         }
-        public static ImageRectangleModel[,] GetMatrix(Bitmap bm, byte procent = 4, ushort pixel = 10)
+
+        public static ImageRectangleModel[,] GetMatrix(Bitmap bm, byte procentHeight = 4, byte procentWidth = 4, ushort pixelHeight = 10,
+            ushort pixelWidth = 10)
         {
-            if (procent >= 50)
-                throw new ArgumentOutOfRangeException(nameof(procent));
+            if (procentHeight >= 50)
+                throw new ArgumentOutOfRangeException(nameof(procentHeight));
+            if (procentWidth >= 50)
+                throw new ArgumentOutOfRangeException(nameof(procentWidth));
 
             int frameHeight;
             int rank0;
-            if (bm.Height < pixel)
+            if (bm.Height < pixelHeight)
             {
                 frameHeight = bm.Height;
                 rank0 = 1;
             }
-            else if (bm.Height * procent / 100 < pixel)
+            else if (bm.Height * procentHeight / 100 < pixelHeight)
             {
-                frameHeight = pixel;
+                frameHeight = pixelHeight;
                 rank0 = bm.Height / frameHeight;
             }
             else
             {
-                frameHeight = bm.Height * procent / 100;
+                frameHeight = bm.Height * procentHeight / 100;
                 rank0 = bm.Height / frameHeight;
             }
 
             int frameWidth;
             int rank1;
-            if (bm.Width < pixel)
+            if (bm.Width < pixelWidth)
             {
                 frameWidth = bm.Width;
                 rank1 = 1;
             }
-            else if (bm.Width * procent / 100 < pixel)
+            else if (bm.Width * procentWidth / 100 < pixelWidth)
             {
-                frameWidth = pixel;
+                frameWidth = pixelWidth;
                 rank1 = bm.Width / frameWidth;
             }
             else
             {
-                frameWidth = bm.Width * procent / 100;
+                frameWidth = bm.Width * procentWidth / 100;
                 rank1 = bm.Width / frameWidth;
             }
 
@@ -151,6 +162,10 @@ namespace Search2.Static
                 {
                     h = bm.Height - i * frameHeight;
                 }
+                else
+                {
+                    h = frameHeight;
+                }
 
                 for (var j = 0; j < arr.GetLength(1); j++)
                 {
@@ -158,20 +173,21 @@ namespace Search2.Static
                     {
                         w = bm.Width - j * frameWidth;
                     }
-
-                    var point = new Point(j * frameWidth, i * frameHeight);
-
+                    else
+                    {
+                        w = frameWidth;
+                    }
+                    
                     try
                     {
-                        arr[i, j] = new ImageRectangleModel { LeftTop = point };
+                        var point = new Point(j * frameWidth, i * frameHeight);
+                        arr[i, j] = new ImageRectangleModel(point, h, w);
                         var img = bm.Clone(new Rectangle(point.X, point.Y, w, h), bm.PixelFormat);
-                        arr[i, j].Image = WorkScreen.Bitmap2BitmapImage(img);
+                        arr[i, j].Image = img.ToBitmapImage();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"W={bm.Width} H={bm.Height}\n" +
-                                        $"X={point.X} Y={point.Y}\n" +
-                                        $"ww={w} hh={h}", ex.Message);
+                        Logger.Log.Error($"{nameof(GetMatrix)}", ex);
                     }
                 }
             }
@@ -179,140 +195,5 @@ namespace Search2.Static
             return arr;
         }
 
-        public static RectangleModel[,] GetMatrixRectangle(Bitmap bm, int procent = 4, ushort pixel = 10)
-        {
-            if (procent >= 50)
-                throw new ArgumentOutOfRangeException(nameof(procent));
-
-            int frameHeight;
-            int rank0;
-            if (bm.Height < pixel)
-            {
-                frameHeight = bm.Height;
-                rank0 = 1;
-            }
-            else if (bm.Height * procent / 100 < pixel)
-            {
-                frameHeight = pixel;
-                rank0 = bm.Height / frameHeight;
-            }
-            else
-            {
-                frameHeight = bm.Height * procent / 100;
-                rank0 = bm.Height / frameHeight;
-            }
-
-            int frameWidth;
-            int rank1;
-            if (bm.Width < pixel)
-            {
-                frameWidth = bm.Width;
-                rank1 = 1; 
-            }
-            else if (bm.Width * procent / 100 < pixel)
-            {
-                frameWidth = pixel;
-                rank1 = bm.Width / frameWidth;
-            }
-            else
-            {
-                frameWidth = bm.Width * procent / 100;
-                rank1 = bm.Width / frameWidth;
-            }
-
-            var arr = new RectangleModel[rank0, rank1];
-
-            for (var i = 0; i < arr.GetLength(0); i++)
-            {
-                var h = i * frameHeight;
-
-                if (i >= arr.GetLength(0))
-                {
-                    frameHeight = bm.Height - h;
-                }
-
-                for (var j = 0; j < arr.GetLength(1); j++)
-                {
-                    var w = j * frameWidth;
-
-                    if (j >= arr.GetLength(1))
-                    {
-                        frameWidth = bm.Width - w;
-                    }
-
-                    arr[i, j] = new RectangleModel()
-                    {
-                        LeftTop = new Point(w, h)
-                    };
-                }
-            }
-
-            return arr;
-        }
-
-        public static Bitmap BitmapImage2Bitmap(BitmapImage bitmapImage)
-        {
-            using (var outStream = new MemoryStream())
-            {
-                var enc = new BmpBitmapEncoder();
-                enc.Frames.Add(BitmapFrame.Create(bitmapImage));
-                enc.Save(outStream);
-                var bitmap = new Bitmap(outStream);
-
-                return new Bitmap(bitmap);
-            }
-        }
-
-        public static bool Comparer(Bitmap source, Bitmap template, double threshold)
-        {
-            var fst = new Image<Bgr, byte>(source);
-            var scd = new Image<Bgr, byte>(template);
-            var imageToShow = fst.Copy();
-
-            using (var result = fst.MatchTemplate(scd, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
-            {
-                result.MinMax(out _, out var maxValues, out _, out var maxLocations);
-
-                if (maxValues[0] > threshold)
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
-
-        public static Bitmap GetImageFromScreenRectange(Rectangle rect)
-        {
-            Bitmap bmp = new Bitmap(rect.Width-4, rect.Height - 4, PixelFormat.Format32bppArgb);
-            using (Graphics graphics = Graphics.FromImage(bmp))
-            {
-                graphics.CopyFromScreen(rect.Left+2, rect.Top + 2, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);
-            }
-            return bmp;
-        }
-
-        public static BitmapImage Bitmap2BitmapImage(Bitmap src)
-        {
-            try
-            {
-                var ms = new MemoryStream();
-                src.Save(ms, ImageFormat.Png);
-                var image = new BitmapImage();
-                image.BeginInit();
-                ms.Seek(0, SeekOrigin.Begin);
-                image.StreamSource = ms;
-                image.EndInit();
-                return image;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public static Image<Bgr, Byte> ConvertBitmapToImageBgrByte(Bitmap src)
-        {
-            return new Image<Bgr, byte>(src);
-        }
     }
 }

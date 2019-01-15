@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="Search2.View.ElementView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Canvas>
+        <Rectangle
+            Canvas.Left="{Binding Path=Area.LeftTop.X}"
+            Canvas.Top="{Binding Path=Area.LeftTop.Y}"
+            Width="{Binding Path=Area.Width}"
+            Height="{Binding Path=Area.Height}"
+            Stroke="{Binding Path=Area.Color}"
+            StrokeDashArray="3"
+            StrokeDashCap="Round"
+            StrokeLineJoin="Round"
+            StrokeThickness="2" />
+
+        <ItemsControl
+            Canvas.Left="{Binding Path=Area.LeftTop.X}"
+            Canvas.Top="{Binding Path=Area.LeftTop.Y}"
+            Margin="2"
+            ItemsSource="{Binding Path=SearchMatrix}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!--<Image Source="{Binding Path=Image}">
+                        <Image.RenderTransform>
+                            <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
+                        </Image.RenderTransform>
+                    </Image>-->
+                    <Rectangle
+                        Width="{Binding Path=Width}"
+                        Height="{Binding Path=Height}"
+                        RadiusX="3"
+                        RadiusY="3"
+                        Stroke="Red"
+                        StrokeDashArray="0"
+                        StrokeDashCap="Round"
+                        StrokeLineJoin="Round"
+                        StrokeThickness="2">
+                        <Rectangle.RenderTransform>
+                            <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Canvas>
+</UserControl>
+
+
+

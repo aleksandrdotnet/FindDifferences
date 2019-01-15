@@ -1,8 +1,8 @@
 ﻿namespace Search2.View
 {
-    public partial class FinderView
+    public partial class ElementView
     {
-        public FinderView()
+        public ElementView()
         {
             InitializeComponent();
         }

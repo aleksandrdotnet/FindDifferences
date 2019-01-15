@@ -1,11 +1,9 @@
-using System;
 using System.Drawing;
 using System.Windows.Media;
-using Search2.Static;
 
-namespace Search2.Model
+namespace Search2.Model.Rectangle
 {
-    public class FinderRectangleModel : RectangleModel
+    public class AreaRectangleModel : RectangleModel
     {
         private Point _startPoint;
         public Point StartPoint
@@ -34,13 +32,8 @@ namespace Search2.Model
                 if (_endPoint != value)
                 {
                     _endPoint = value;
-
-                    LeftTop = new Point(
-                        Math.Min(_startPoint.X, _endPoint.X),
-                        Math.Min(_startPoint.Y, _endPoint.Y));
-
-                    Width = Math.Abs(_endPoint.X - _startPoint.X);
-                    Height = Math.Abs(_endPoint.Y - _startPoint.Y);
+                    
+                    SetRectangle(_startPoint, _endPoint);
 
                     NextTop = LeftTop.Y + Height;
 
@@ -63,14 +56,14 @@ namespace Search2.Model
             }
         }
 
-        private SolidColorBrush _color = new SolidColorBrush(Colors.Red);
+        private SolidColorBrush _color = new SolidColorBrush(Colors.DarkRed);
 
         public SolidColorBrush Color
         {
             get => _color;
             set
             {
-                if (_color != value)
+                if (!Equals(_color, value))
                 {
                     _color = value;
                     NotifyOfPropertyChange(() => Color);
@@ -78,12 +71,16 @@ namespace Search2.Model
             }
         }
 
-        public override void Clear()
+        protected override void Clear()
         {
             base.Clear();
             
             _startPoint = new Point(0, 0);
             _endPoint = new Point(0, 0);
+        }
+
+        public AreaRectangleModel(Point leftTop, int height, int width) : base(leftTop, height, width)
+        {
         }
     }
 }

@@ -1,9 +1,8 @@
+using System;
 using System.Drawing;
-using System.Windows.Shapes;
 using Caliburn.Micro;
-using Brushes = System.Windows.Media.Brushes;
 
-namespace Search2.Model
+namespace Search2.Model.Rectangle
 {
     public class RectangleModel : PropertyChangedBase
     {
@@ -48,12 +47,32 @@ namespace Search2.Model
                 }
             }
         }
-        
-        public virtual void Clear()
+
+        public RectangleModel(Point leftTop, int height, int width)
         {
-            LeftTop = new Point(0, 0);
-            Height = 0;
-            Width = 0;
+            LeftTop = leftTop;
+            Height = height;
+            Width = width;
+        }
+
+        public void SetRectangle(Point fst, Point snd)
+        {
+            LeftTop = new Point(
+                Math.Min(fst.X, snd.X),
+                Math.Min(fst.Y, snd.Y));
+
+            Width = Math.Abs(snd.X - fst.X);
+            Height = Math.Abs(snd.Y - fst.Y);
+        }
+
+        protected virtual void Clear()
+        {
+            SetRectangle(new Point(0, 0), new Point(0, 0));
+        }
+
+        public override string ToString()
+        {
+            return $"({LeftTop.X},{LeftTop.Y}) ({LeftTop.X+ Width},{LeftTop.Y+ Height})";
         }
     }
 }

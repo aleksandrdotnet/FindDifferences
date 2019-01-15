@@ -5,7 +5,6 @@
     xmlns:cal="http://www.caliburnproject.org"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-    xmlns:search2="clr-namespace:Search2"
     xmlns:view="clr-namespace:Search2.View"
     AllowsTransparency="True"
     Background="Transparent"
@@ -26,85 +25,110 @@
     WindowStyle="None">
 
     <Grid>
-        <Menu HorizontalAlignment="Center" VerticalAlignment="Top">
-            <!--  Command="{Binding Path=CropCommand}"  -->
-            <MenuItem DataContext="{Binding Path=Element}">
-                <MenuItem.Header>
-                    <ToggleButton
-                        Width="100"
-                        cal:Message.Attach="[Event Click] = [Action Crop($this,$eventArgs)]"
-                        IsChecked="{Binding Path=IsChecked}">
-                        <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterialLight
-                                Width="40"
-                                Height="40"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Kind="Crop" />
-                            <Label VerticalAlignment="Center" Content="Выбрать область" />
-                        </StackPanel>
-                    </ToggleButton>
-                </MenuItem.Header>
-            </MenuItem>
+        <StackPanel Orientation="Vertical">
+            <Menu
+                x:Name="MainMenu"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top">
+                <MenuItem DataContext="{Binding Path=Finder.Elements[0]}">
+                    <MenuItem.Header>
+                        <ToggleButton
+                            Width="100"
+                            cal:Message.Attach="[Event Click] = [Action Scissors($this,$eventArgs)]"
+                            IsChecked="{Binding Path=IsChecked}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterialLight
+                                    Width="40"
+                                    Height="40"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Crop" />
+                                <Label VerticalAlignment="Center" Content="Первая" />
+                            </StackPanel>
+                        </ToggleButton>
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem DataContext="{Binding Path=Finder.Elements[1]}">
+                    <MenuItem.Header>
+                        <ToggleButton
+                            Width="100"
+                            cal:Message.Attach="[Event Click] = [Action Scissors($this,$eventArgs)]"
+                            IsChecked="{Binding Path=IsChecked}">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterialLight
+                                    Width="40"
+                                    Height="40"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Crop" />
+                                <Label VerticalAlignment="Center" Content="Вторая" />
+                            </StackPanel>
+                        </ToggleButton>
+                    </MenuItem.Header>
+                </MenuItem>
 
-            <MenuItem DataContext="{Binding Path=Element}">
-                <MenuItem.Header>
-                    <Button Width="100" cal:Message.Attach="[Event Click] = [Action Find($this,$eventArgs)]">
-                        <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterialLight
-                                Width="40"
-                                Height="40"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Kind="Eye" />
-                            <Label VerticalAlignment="Center" Content="Найти" />
-                        </StackPanel>
-                    </Button>
-                </MenuItem.Header>
-            </MenuItem>
+                <MenuItem DataContext="{Binding Path=Finder}">
+                    <MenuItem.Header>
+                        <Button Width="100" cal:Message.Attach="[Event Click] = [Action Find($this,$eventArgs)]">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterialLight
+                                    Width="40"
+                                    Height="40"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Eye" />
+                                <Label VerticalAlignment="Center" Content="Найти" />
+                            </StackPanel>
+                        </Button>
+                    </MenuItem.Header>
+                </MenuItem>
 
-            <MenuItem DataContext="{Binding Path=Element}">
-                <MenuItem.Header>
-                    <Button Width="100" cal:Message.Attach="[Event Click] = [Action Save($this,$eventArgs)]">
-                        <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterialLight
-                                Width="30"
-                                Height="30"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Kind="ContentSave" />
-                            <Label VerticalAlignment="Center" Content="Сохранить" />
-                        </StackPanel>
-                    </Button>
-                </MenuItem.Header>
-            </MenuItem>
+                <!--<MenuItem DataContext="{Binding Path=Element}">
+                    <MenuItem.Header>
+                        <Button Width="100" cal:Message.Attach="[Event Click] = [Action Save($this,$eventArgs)]">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterialLight
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="ContentSave" />
+                                <Label VerticalAlignment="Center" Content="Сохранить" />
+                            </StackPanel>
+                        </Button>
+                    </MenuItem.Header>
+                </MenuItem>-->
 
-            <MenuItem DataContext="{Binding Path=Element}">
-                <MenuItem.Header>
-                    <TextBox Text="{Binding Path=Threshold}"/>
-                </MenuItem.Header>
-            </MenuItem>
+                <MenuItem>
+                    <MenuItem.Header>
+                        <Button Width="100" cal:Message.Attach="[Event Click] = [Action Close($this,$eventArgs)]">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterialLight
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Power" />
+                                <Label VerticalAlignment="Center" Content="Закрыть" />
+                            </StackPanel>
+                        </Button>
+                    </MenuItem.Header>
+                </MenuItem>
+            </Menu>
 
-            <MenuItem>
-                <MenuItem.Header>
-                    <Button Width="100" cal:Message.Attach="[Event Click] = [Action Close($this,$eventArgs)]">
-                        <StackPanel Orientation="Horizontal">
-                            <iconPacks:PackIconMaterialLight
-                                Width="30"
-                                Height="30"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Kind="Power" />
-                            <Label VerticalAlignment="Center" Content="Закрыть" />
-                        </StackPanel>
-                    </Button>
-                </MenuItem.Header>
-            </MenuItem>
+            <mah:MetroProgressBar
+                Width="{Binding ActualWidth, ElementName=MainMenu}"
+                Height="3"
+                MinHeight="3"
+                Margin="0,2,0,0"
+                Foreground="Black"
+                Maximum="100"
+                Value="{Binding Path=Finder.Progress}" />
+        </StackPanel>
 
 
-        </Menu>
-
-        <view:FinderView DataContext="{Binding Path=Element}" />
+        <view:ElementView DataContext="{Binding Path=Finder.Elements[0]}" />
+        <view:ElementView DataContext="{Binding Path=Finder.Elements[1]}" />
     </Grid>
 </mah:MetroWindow>
 

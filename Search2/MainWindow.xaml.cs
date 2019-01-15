@@ -1,4 +1,5 @@
-﻿using Search2.ViewModel;
+﻿using Search2.Static;
+using Search2.ViewModel;
 
 namespace Search2
 {
@@ -7,6 +8,9 @@ namespace Search2
         public MainWindow()
         {
             InitializeComponent();
+
+            Logger.InitLogger();
+
             DataContext = new MainViewModel();
         }
     }
