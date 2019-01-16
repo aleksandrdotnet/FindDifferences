@@ -118,6 +118,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Static\ImageEx.cs" />
+    <Compile Include="Static\RelayCommand.cs" />
     <Compile Include="ViewModel\FinderViewModel.cs" />
     <Compile Include="Model\Rectangle\AreaRectangleModel.cs" />
     <Compile Include="Model\Rectangle\ImageRectangleModel.cs" />

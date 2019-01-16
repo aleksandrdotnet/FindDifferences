@@ -12,11 +12,11 @@ namespace Search2.ViewModel
 {
     public sealed class ElementViewModel : PropertyChangedBase
     {
-        private AreaRectangleModel _area;
+        private AreaRectangleModel _area = new AreaRectangleModel(new Point(), 0, 0);
         public AreaRectangleModel Area
         {
             get => _area;
-            set
+            private set
             {
                 if (_area != value)
                 {
@@ -41,7 +41,9 @@ namespace Search2.ViewModel
         }
 
         #region Command
-        public void Scissors(object sender, EventArgs e)
+        public ICommand ScissorCommand => new RelayCommand(Scissors);
+
+        public void Scissors(object sender)
         {
             if (IsChecked)
             {
@@ -68,7 +70,22 @@ namespace Search2.ViewModel
                 }
             }
         }
-        
+
+        private bool _isExist;
+
+        public bool IsExist
+        {
+            get => _isExist;
+            set
+            {
+                if (_isExist != value)
+                {
+                    _isExist = value;
+                    NotifyOfPropertyChange(() => IsExist);
+                }
+            }
+        }
+
         private void MouseHook_MouseLeftButton(object sender, Tuple<MouseButtonState, Point> e)
         {
             switch (e.Item1)
@@ -88,6 +105,7 @@ namespace Search2.ViewModel
                     
                     _isPressed = false;
                     IsChecked = false;
+                    IsExist = true;
                     break;
             }
         }
@@ -103,7 +121,7 @@ namespace Search2.ViewModel
 
         public ElementViewModel(Color color)
         {
-            Area = new AreaRectangleModel(new Point(), 0, 0) {Color = new SolidColorBrush(color)};
+            Area.Color = new SolidColorBrush(color);
         }
 
         public ElementViewModel() : this(Colors.DarkRed)

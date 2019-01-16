@@ -34,7 +34,7 @@
                     <MenuItem.Header>
                         <ToggleButton
                             Width="100"
-                            cal:Message.Attach="[Event Click] = [Action Scissors($this,$eventArgs)]"
+                            Command="{Binding Path=ScissorCommand}"
                             IsChecked="{Binding Path=IsChecked}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconMaterialLight
@@ -48,11 +48,13 @@
                         </ToggleButton>
                     </MenuItem.Header>
                 </MenuItem>
+
+                <!--  cal:Message.Attach="[Event Click] = [Action Scissors($this,$eventArgs)]"  -->
                 <MenuItem DataContext="{Binding Path=Finder.Elements[1]}">
                     <MenuItem.Header>
                         <ToggleButton
                             Width="100"
-                            cal:Message.Attach="[Event Click] = [Action Scissors($this,$eventArgs)]"
+                            Command="{Binding Path=ScissorCommand}"
                             IsChecked="{Binding Path=IsChecked}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconMaterialLight
@@ -98,6 +100,22 @@
                         </Button>
                     </MenuItem.Header>
                 </MenuItem>-->
+
+                <MenuItem DataContext="{Binding Path=Finder}">
+                    <MenuItem.Header>
+                        <Button Width="100" cal:Message.Attach="[Event Click] = [Action Clear($this,$eventArgs)]">
+                            <StackPanel Orientation="Horizontal">
+                                <iconPacks:PackIconMaterialLight
+                                    Width="30"
+                                    Height="30"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Kind="Delete" />
+                                <Label VerticalAlignment="Center" Content="Очистить" />
+                            </StackPanel>
+                        </Button>
+                    </MenuItem.Header>
+                </MenuItem>
 
                 <MenuItem>
                     <MenuItem.Header>

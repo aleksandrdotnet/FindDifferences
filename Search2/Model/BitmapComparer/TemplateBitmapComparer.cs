@@ -17,12 +17,14 @@ namespace Search2.Model.BitmapComparer
             return await Task.Run(() => Checker(first, second, progress, threshold));
         }
 
-        private IList<RectangleModel> Checker(Bitmap first, Bitmap second, IProgress<int> progress, double threshold)
+        private IList<RectangleModel> Checker(Bitmap first, Bitmap second, IProgress<int> progress, double threshold,
+            bool equal = true)
         {
             var frame = WorkScreen.GetMatrix(first);
             var source = second;
 
-            var list = new List<RectangleModel>();
+            var listEqual = new List<RectangleModel>();
+            var listNotEqual = new List<RectangleModel>();
 
             for (int i = 0; i < frame.GetLength(0); i++)
             {
@@ -36,12 +38,13 @@ namespace Search2.Model.BitmapComparer
 
                     if (result.Item1)
                     {
-
+                        var rect = new RectangleModel(leftTop: frame[i, j].LeftTop, height: template.Height, width: template.Width);
+                        listNotEqual.Add(rect);
                     }
                     else
                     {
                         var rect = new RectangleModel(leftTop: frame[i, j].LeftTop, height: template.Height, width: template.Width);
-                        list.Add(rect);
+                        listEqual.Add(rect);
                     }
 
                     progress.Report(procent);
@@ -50,7 +53,10 @@ namespace Search2.Model.BitmapComparer
 
             progress.Report(0);
 
-            return list;
+            if (equal)
+                return listEqual;
+
+            return listNotEqual;
         }
 
         private Tuple<bool, IList<RectangleModel>> TemplateComparsion(Bitmap source, Bitmap template, double threshold )

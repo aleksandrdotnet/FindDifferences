@@ -39,7 +39,7 @@ namespace Search2.ViewModel
         public ObservableCollection<ElementViewModel> Elements
         {
             get => _elements;
-            set
+            private set
             {
                 if (_elements != value)
                 {
@@ -51,7 +51,7 @@ namespace Search2.ViewModel
 
         public async void Find(object sender, EventArgs e)
         {
-            if (Elements.All(x => x.Area != null))
+            if (Elements.All(x => x.IsExist))
             {
                 var bitmap0 = WorkScreen.GetBitmapFromScreen(new RectangleModel(Elements[0].Area.LeftTop, Elements[0].Area.Height, Elements[0].Area.Width));
                 var bitmap1 = WorkScreen.GetBitmapFromScreen(new RectangleModel(Elements[1].Area.LeftTop, Elements[1].Area.Height, Elements[1].Area.Width));
@@ -78,6 +78,15 @@ namespace Search2.ViewModel
                     elem.Area.Width,
                     elem.Area.Height));
             }
+        }
+
+        public void Clear(object sender, EventArgs e)
+        {
+            Elements= new ObservableCollection<ElementViewModel>()
+            {
+                new ElementViewModel(Colors.OrangeRed),
+                new ElementViewModel(Colors.GreenYellow)
+            };
         }
 
         public FinderViewModel(IBitmapComparer bitmapComparer)

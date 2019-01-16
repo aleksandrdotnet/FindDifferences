@@ -41,7 +41,8 @@
                         StrokeDashArray="0"
                         StrokeDashCap="Round"
                         StrokeLineJoin="Round"
-                        StrokeThickness="0">
+                        StrokeThickness="0"
+                        Opacity="0.4">
                         <Rectangle.RenderTransform>
                             <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
                         </Rectangle.RenderTransform>
