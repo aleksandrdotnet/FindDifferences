@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 using Caliburn.Micro;
 using Search2.Hook;
 using Search2.Model.Rectangle;
 using Search2.Static;
+using Color = System.Windows.Media.Color;
 using Point = System.Drawing.Point;
 
 namespace Search2.ViewModel
@@ -26,16 +28,16 @@ namespace Search2.ViewModel
             }
         }
 
-        private ObservableCollection<RectangleModel> _serachMatrix = new ObservableCollection<RectangleModel>();
-        public ObservableCollection<RectangleModel> SearchMatrix
+        private ObservableCollection<RectangleModel> _matrix = new ObservableCollection<RectangleModel>();
+        public ObservableCollection<RectangleModel> Matrix
         {
-            get => _serachMatrix;
+            get => _matrix;
             set
             {
-                if (!Equals(_serachMatrix, value))
+                if (!Equals(_matrix, value))
                 {
-                    _serachMatrix = value;
-                    NotifyOfPropertyChange(() => SearchMatrix);
+                    _matrix = value;
+                    NotifyOfPropertyChange(() => Matrix);
                 }
             }
         }
@@ -91,7 +93,7 @@ namespace Search2.ViewModel
             switch (e.Item1)
             {
                 case MouseButtonState.Pressed:
-                    SearchMatrix.Clear();
+                    Matrix.Clear();
                     Area.StartPoint = e.Item2;
                     Area.EndPoint = e.Item2;
 
@@ -128,7 +130,15 @@ namespace Search2.ViewModel
         {
             
         }
-        
+
+        public Bitmap GetBitmap()
+        {
+            if (IsExist)
+                return WorkScreen.GetBitmapFromScreen(new RectangleModel(Area.LeftTop, Area.Height, Area.Width));
+
+            return null;
+        }
+
         public void Dispose()
         {
             if (IsChecked)

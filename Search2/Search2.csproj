@@ -121,14 +121,13 @@
     <Compile Include="Static\RelayCommand.cs" />
     <Compile Include="ViewModel\FinderViewModel.cs" />
     <Compile Include="Model\Rectangle\AreaRectangleModel.cs" />
-    <Compile Include="Model\Rectangle\ImageRectangleModel.cs" />
     <Compile Include="Model\Rectangle\RectangleModel.cs" />
     <Compile Include="Static\EnumExtension.cs" />
     <Compile Include="Static\EqualityComparer.cs" />
     <Compile Include="Model\BitmapComparer\IBitmapComparer.cs" />
     <Compile Include="Model\BitmapComparer\TemplateBitmapComparer.cs" />
     <Compile Include="Static\Logger.cs" />
-    <Compile Include="Static\StopwatchOperation.cs" />
+    <Compile Include="Static\StopwatchExtension.cs" />
     <Compile Include="Static\TimerExtension.cs" />
     <Compile Include="View\ElementView.xaml.cs">
       <DependentUpon>ElementView.xaml</DependentUpon>

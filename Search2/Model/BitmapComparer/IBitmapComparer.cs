@@ -8,6 +8,6 @@ namespace Search2.Model.BitmapComparer
 {
     public interface IBitmapComparer
     {
-        Task<IList<RectangleModel>> CheckerAsync(Bitmap first, Bitmap second, IProgress<int> progress, double threshold);
+        Task<IList<RectangleModel>> CheckerAsync(Bitmap first, Bitmap second, IProgress<int> progress, double threshold, bool equal);
     }
 }

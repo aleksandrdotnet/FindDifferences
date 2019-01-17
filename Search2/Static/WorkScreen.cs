@@ -108,7 +108,7 @@ namespace Search2.Static
             return printscreen;
         }
 
-        public static ImageRectangleModel[,] GetMatrix(Bitmap bm, byte procentHeight = 4, byte procentWidth = 4, ushort pixelHeight = 10,
+        public static RectangleModel<Bitmap>[,] GetMatrix(Bitmap bm, byte procentHeight = 4, byte procentWidth = 4, ushort pixelHeight = 10,
             ushort pixelWidth = 10)
         {
             if (procentHeight >= 50)
@@ -152,12 +152,10 @@ namespace Search2.Static
                 rank1 = bm.Width / frameWidth;
             }
 
-            int h = frameHeight;
-            int w = frameWidth;
-
-            var arr = new ImageRectangleModel[rank0, rank1];
+            var arr = new RectangleModel<Bitmap>[rank0, rank1];
             for (var i = 0; i < arr.GetLength(0); i++)
             {
+                int h;
                 if (i == (arr.GetLength(0) - 1))
                 {
                     h = bm.Height - i * frameHeight;
@@ -169,6 +167,7 @@ namespace Search2.Static
 
                 for (var j = 0; j < arr.GetLength(1); j++)
                 {
+                    int w;
                     if (j == arr.GetLength(1) - 1)
                     {
                         w = bm.Width - j * frameWidth;
@@ -181,9 +180,9 @@ namespace Search2.Static
                     try
                     {
                         var point = new Point(j * frameWidth, i * frameHeight);
-                        arr[i, j] = new ImageRectangleModel(point, h, w);
+                        arr[i, j] = new RectangleModel<Bitmap>(point, h, w);
                         var img = bm.Clone(new Rectangle(point.X, point.Y, w, h), bm.PixelFormat);
-                        arr[i, j].Image = img.ToBitmapImage();
+                        arr[i, j].SetImage(img);
                     }
                     catch (Exception ex)
                     {

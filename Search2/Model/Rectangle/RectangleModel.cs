@@ -4,6 +4,32 @@ using Caliburn.Micro;
 
 namespace Search2.Model.Rectangle
 {
+    public class RectangleModel<T> : RectangleModel
+    {
+        private T _image;
+
+        public T Image
+        {
+            get => _image;
+            private set
+            {
+                if (!Equals(_image, value))
+                {
+                    _image = value;
+                    NotifyOfPropertyChange(() => Image);
+                }
+            }
+        }
+
+        public RectangleModel(Point leftTop, int height, int width) : base(leftTop, height, width)
+        {
+        }
+
+        public void SetImage(T image)
+        {
+            Image = image;
+        }
+    }
     public class RectangleModel : PropertyChangedBase
     {
         private Point _leftTop;
@@ -55,7 +81,7 @@ namespace Search2.Model.Rectangle
             Width = width;
         }
 
-        public void SetRectangle(Point fst, Point snd)
+        protected void SetRectangle(Point fst, Point snd)
         {
             LeftTop = new Point(
                 Math.Min(fst.X, snd.X),

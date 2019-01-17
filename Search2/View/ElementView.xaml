@@ -1,7 +1,9 @@
 ﻿<UserControl
     x:Class="Search2.View.ElementView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:rectangle="clr-namespace:Search2.Model.Rectangle">
+    
     <Canvas>
         <Rectangle
             Canvas.Left="{Binding Path=Area.LeftTop.X}"
@@ -12,26 +14,22 @@
             StrokeDashArray="3"
             StrokeDashCap="Round"
             StrokeLineJoin="Round"
-            StrokeThickness="2" />
+            StrokeThickness="2">
+        </Rectangle>
 
         <ItemsControl
             Canvas.Left="{Binding Path=Area.LeftTop.X}"
             Canvas.Top="{Binding Path=Area.LeftTop.Y}"
             Margin="2"
-            ItemsSource="{Binding Path=SearchMatrix}">
+            ItemsSource="{Binding Path=Matrix}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <!--<Image Source="{Binding Path=Image}">
-                        <Image.RenderTransform>
-                            <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
-                        </Image.RenderTransform>
-                    </Image>-->
-                    <Rectangle
+                <DataTemplate DataType="{x:Type rectangle:RectangleModel}">
+                    <Rectangle 
                         Width="{Binding Path=Width}"
                         Height="{Binding Path=Height}"
                         RadiusX="0"

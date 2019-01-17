@@ -144,7 +144,6 @@
                 Value="{Binding Path=Finder.Progress}" />
         </StackPanel>
 
-
         <view:ElementView DataContext="{Binding Path=Finder.Elements[0]}" />
         <view:ElementView DataContext="{Binding Path=Finder.Elements[1]}" />
     </Grid>

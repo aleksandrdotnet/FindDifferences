@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Media;
 using Caliburn.Micro;
@@ -49,24 +50,25 @@ namespace Search2.ViewModel
             }
         }
 
+        #region Command
         public async void Find(object sender, EventArgs e)
         {
             if (Elements.All(x => x.IsExist))
             {
-                var bitmap0 = WorkScreen.GetBitmapFromScreen(new RectangleModel(Elements[0].Area.LeftTop, Elements[0].Area.Height, Elements[0].Area.Width));
-                var bitmap1 = WorkScreen.GetBitmapFromScreen(new RectangleModel(Elements[1].Area.LeftTop, Elements[1].Area.Height, Elements[1].Area.Width));
+                var bitmap0 = Elements[0].GetBitmap() ?? throw new ArgumentNullException();
+                var bitmap1 = Elements[1].GetBitmap() ?? throw new ArgumentNullException();
 
                 var elements0 = await _bitmapComparer.CheckerAsync(
                     bitmap0, bitmap1,
-                    _checkProgress, _threshold);
+                    _checkProgress, _threshold, false);
 
-                Elements[0].SearchMatrix = new ObservableCollection<RectangleModel>(elements0);
+                Elements[0].Matrix = new ObservableCollection<RectangleModel>(elements0);
 
-                //var elements1 = await _bitmapComparer.CheckerAsync(
-                //    bitmap1, bitmap0,
-                //    _checkProgress, _threshold);
+                var elements1 = await _bitmapComparer.CheckerAsync(
+                    bitmap1, bitmap0,
+                    _checkProgress, _threshold, false);
 
-                //Elements[1].SearchMatrix = new ObservableCollection<RectangleModel>(elements1);
+                Elements[1].Matrix = new ObservableCollection<RectangleModel>(elements1);
             }
         }
 
@@ -88,6 +90,7 @@ namespace Search2.ViewModel
                 new ElementViewModel(Colors.GreenYellow)
             };
         }
+        #endregion
 
         public FinderViewModel(IBitmapComparer bitmapComparer)
         {
