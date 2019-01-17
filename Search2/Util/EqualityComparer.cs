@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public class EqualityComparer<T> : IEqualityComparer<T>
     {

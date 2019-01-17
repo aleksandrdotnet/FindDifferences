@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:rectangle="clr-namespace:Search2.Model.Rectangle">
-    
+
     <Canvas>
         <Rectangle
             Canvas.Left="{Binding Path=Area.LeftTop.X}"
@@ -14,8 +14,7 @@
             StrokeDashArray="3"
             StrokeDashCap="Round"
             StrokeLineJoin="Round"
-            StrokeThickness="2">
-        </Rectangle>
+            StrokeThickness="2" />
 
         <ItemsControl
             Canvas.Left="{Binding Path=Area.LeftTop.X}"
@@ -29,18 +28,18 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type rectangle:RectangleModel}">
-                    <Rectangle 
+                    <Rectangle
                         Width="{Binding Path=Width}"
                         Height="{Binding Path=Height}"
+                        Fill="OrangeRed"
+                        Opacity="0.4"
                         RadiusX="0"
                         RadiusY="0"
                         Stroke="OrangeRed"
-                        Fill="OrangeRed"
                         StrokeDashArray="0"
                         StrokeDashCap="Round"
                         StrokeLineJoin="Round"
-                        StrokeThickness="0"
-                        Opacity="0.4">
+                        StrokeThickness="0">
                         <Rectangle.RenderTransform>
                             <TranslateTransform X="{Binding Path=LeftTop.X, FallbackValue=0}" Y="{Binding Path=LeftTop.Y, FallbackValue=0}" />
                         </Rectangle.RenderTransform>

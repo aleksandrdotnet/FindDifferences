@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using Search2.Model.Rectangle;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public static class WorkScreen
     {

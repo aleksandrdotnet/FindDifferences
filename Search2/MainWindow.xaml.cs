@@ -1,4 +1,4 @@
-﻿using Search2.Static;
+﻿using Search2.Util;
 using Search2.ViewModel;
 
 namespace Search2

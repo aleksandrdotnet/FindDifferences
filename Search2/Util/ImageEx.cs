@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 using Emgu.CV;
 using Emgu.CV.Structure;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public static class ImageEx
     {

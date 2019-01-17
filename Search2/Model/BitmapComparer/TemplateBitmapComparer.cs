@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Emgu.CV.CvEnum;
 using Search2.Model.Rectangle;
-using Search2.Static;
+using Search2.Util;
 
 namespace Search2.Model.BitmapComparer
 {

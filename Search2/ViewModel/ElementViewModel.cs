@@ -4,9 +4,8 @@ using System.Drawing;
 using System.Windows.Input;
 using System.Windows.Media;
 using Caliburn.Micro;
-using Search2.Hook;
 using Search2.Model.Rectangle;
-using Search2.Static;
+using Search2.Util;
 using Color = System.Windows.Media.Color;
 using Point = System.Drawing.Point;
 
@@ -43,17 +42,15 @@ namespace Search2.ViewModel
         }
 
         #region Command
-        public ICommand ScissorCommand => new RelayCommand(Scissors);
-
-        public void Scissors(object sender)
+        public ICommand ScissorCommand => new RelayCommand(sender =>
         {
             if (IsChecked)
             {
                 MouseHook.Start();
                 MouseHook.MouseLeftButton += MouseHook_MouseLeftButton;
-                MouseHook.MouseLeftMove += MouseHook_MouseLeftMove;
+                MouseHook.MouseMove += MouseHook_MouseLeftMove;
             }
-        }
+        });
         #endregion
 
         #region Mouse
@@ -103,7 +100,7 @@ namespace Search2.ViewModel
                 case MouseButtonState.Released:
                     MouseHook.Stop();
                     MouseHook.MouseLeftButton -= MouseHook_MouseLeftButton;
-                    MouseHook.MouseLeftMove -= MouseHook_MouseLeftMove;
+                    MouseHook.MouseMove -= MouseHook_MouseLeftMove;
                     
                     _isPressed = false;
                     IsChecked = false;
@@ -145,7 +142,7 @@ namespace Search2.ViewModel
             {
                 MouseHook.Stop();
                 MouseHook.MouseLeftButton -= MouseHook_MouseLeftButton;
-                MouseHook.MouseLeftMove -= MouseHook_MouseLeftMove;
+                MouseHook.MouseMove -= MouseHook_MouseLeftMove;
             }
         }
     }

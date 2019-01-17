@@ -4,12 +4,14 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 
-namespace Search2.Hook
+namespace Search2.Util
 {
     public static class MouseHook
     {
         public static event EventHandler<Tuple<MouseButtonState, Point>> MouseLeftButton;
-        public static event EventHandler<Point> MouseLeftMove;
+        public static event EventHandler<Tuple<MouseButtonState, Point>> MouseRightButton;
+        public static event EventHandler<Point> MouseMove;
+        public static event EventHandler<Point> MouseWheel;
 
         public static void Start()
         {
@@ -47,11 +49,25 @@ namespace Search2.Hook
                     case MouseMessages.WM_LBUTTONDOWN:
                         MouseLeftButton?.Invoke(null, new Tuple<MouseButtonState, Point>(MouseButtonState.Pressed, new Point(hookStruct.pt.x, hookStruct.pt.y)));
                         break;
+
                     case MouseMessages.WM_LBUTTONUP:
                         MouseLeftButton?.Invoke(null, new Tuple<MouseButtonState, Point>(MouseButtonState.Released, new Point(hookStruct.pt.x, hookStruct.pt.y)));
                         break;
+
                     case MouseMessages.WM_MOUSEMOVE:
-                        MouseLeftMove?.Invoke(null, new Point(hookStruct.pt.x, hookStruct.pt.y));
+                        MouseMove?.Invoke(null, new Point(hookStruct.pt.x, hookStruct.pt.y));
+                        break;
+
+                    case MouseMessages.WM_RBUTTONDOWN:
+                        MouseRightButton?.Invoke(null, new Tuple<MouseButtonState, Point>(MouseButtonState.Pressed, new Point(hookStruct.pt.x, hookStruct.pt.y)));
+                        break;
+
+                    case MouseMessages.WM_RBUTTONUP:
+                        MouseRightButton?.Invoke(null, new Tuple<MouseButtonState, Point>(MouseButtonState.Released, new Point(hookStruct.pt.x, hookStruct.pt.y)));
+                        break;
+
+                    case MouseMessages.WM_MOUSEWHEEL:
+                        MouseWheel?.Invoke(null, new Point(hookStruct.pt.x, hookStruct.pt.y));
                         break;
                 }
             }

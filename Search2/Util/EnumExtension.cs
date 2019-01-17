@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public static class EnumExtension
     {

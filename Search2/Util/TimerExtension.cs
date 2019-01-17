@@ -1,6 +1,6 @@
 using System.Timers;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public static class TimerExtension
     {

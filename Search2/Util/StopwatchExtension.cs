@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public static class StopwatchExtension
     {

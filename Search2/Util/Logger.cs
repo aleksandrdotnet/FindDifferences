@@ -1,7 +1,7 @@
 ﻿using log4net;
 using log4net.Config;
 
-namespace Search2.Static
+namespace Search2.Util
 {
     public static class Logger
     {

@@ -117,24 +117,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Static\ImageEx.cs" />
-    <Compile Include="Static\RelayCommand.cs" />
+    <Compile Include="Util\ImageEx.cs" />
+    <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\FinderViewModel.cs" />
     <Compile Include="Model\Rectangle\AreaRectangleModel.cs" />
     <Compile Include="Model\Rectangle\RectangleModel.cs" />
-    <Compile Include="Static\EnumExtension.cs" />
-    <Compile Include="Static\EqualityComparer.cs" />
+    <Compile Include="Util\EnumExtension.cs" />
+    <Compile Include="Util\EqualityComparer.cs" />
     <Compile Include="Model\BitmapComparer\IBitmapComparer.cs" />
     <Compile Include="Model\BitmapComparer\TemplateBitmapComparer.cs" />
-    <Compile Include="Static\Logger.cs" />
-    <Compile Include="Static\StopwatchExtension.cs" />
-    <Compile Include="Static\TimerExtension.cs" />
+    <Compile Include="Util\Logger.cs" />
+    <Compile Include="Util\StopwatchExtension.cs" />
+    <Compile Include="Util\TimerExtension.cs" />
     <Compile Include="View\ElementView.xaml.cs">
       <DependentUpon>ElementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="Static\WorkScreen.cs" />
+    <Compile Include="Util\WorkScreen.cs" />
     <Page Include="View\ElementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -154,7 +154,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hook\MouseHook.cs" />
+    <Compile Include="Util\MouseHook.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

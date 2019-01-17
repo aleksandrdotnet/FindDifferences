@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Media;
 using Caliburn.Micro;
 using Search2.Model.BitmapComparer;
 using Search2.Model.Rectangle;
-using Search2.Static;
+using Search2.Util;
 
 namespace Search2.ViewModel
 {
