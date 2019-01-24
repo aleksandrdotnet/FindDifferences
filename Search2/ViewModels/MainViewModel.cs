@@ -2,9 +2,9 @@ using System;
 using Caliburn.Micro;
 using Application = System.Windows.Application;
 
-namespace Search2.ViewModel
+namespace Search2.ViewModels
 {
-    public class MainViewModel : PropertyChangedBase
+    public class MainViewModel : Screen
     {
         private FinderViewModel _finder = new FinderViewModel();
         public FinderViewModel Finder

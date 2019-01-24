@@ -9,7 +9,7 @@ using Search2.Util;
 using Color = System.Windows.Media.Color;
 using Point = System.Drawing.Point;
 
-namespace Search2.ViewModel
+namespace Search2.ViewModels
 {
     public sealed class ElementViewModel : PropertyChangedBase
     {

@@ -117,9 +117,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Util\ImageEx.cs" />
+    <Compile Include="Util\InfoSingleton.cs" />
     <Compile Include="Util\RelayCommand.cs" />
-    <Compile Include="ViewModel\FinderViewModel.cs" />
+    <Compile Include="ViewModels\FinderViewModel.cs" />
     <Compile Include="Model\Rectangle\AreaRectangleModel.cs" />
     <Compile Include="Model\Rectangle\RectangleModel.cs" />
     <Compile Include="Util\EnumExtension.cs" />
@@ -129,17 +131,17 @@
     <Compile Include="Util\Logger.cs" />
     <Compile Include="Util\StopwatchExtension.cs" />
     <Compile Include="Util\TimerExtension.cs" />
-    <Compile Include="View\ElementView.xaml.cs">
+    <Compile Include="Views\ElementView.xaml.cs">
       <DependentUpon>ElementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Util\WorkScreen.cs" />
-    <Page Include="View\ElementView.xaml">
+    <Page Include="Views\ElementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -147,9 +149,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\ElementViewModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="ViewModels\ElementViewModel.cs" />
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

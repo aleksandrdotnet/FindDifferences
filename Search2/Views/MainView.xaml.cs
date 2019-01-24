@@ -1,11 +1,11 @@
 ﻿using Search2.Util;
-using Search2.ViewModel;
+using Search2.ViewModels;
 
-namespace Search2
+namespace Search2.Views
 {
-    public partial class MainWindow
+    public partial class MainView
     { 
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
 

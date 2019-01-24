@@ -7,7 +7,7 @@ using Search2.Model.BitmapComparer;
 using Search2.Model.Rectangle;
 using Search2.Util;
 
-namespace Search2.ViewModel
+namespace Search2.ViewModels
 {
     public class FinderViewModel : PropertyChangedBase
     {
@@ -63,11 +63,11 @@ namespace Search2.ViewModel
 
                 Elements[0].Matrix = new ObservableCollection<RectangleModel>(elements0);
 
-                var elements1 = await _bitmapComparer.CheckerAsync(
-                    bitmap1, bitmap0,
-                    _checkProgress, _threshold, false);
+                //var elements1 = await _bitmapComparer.CheckerAsync(
+                //    bitmap1, bitmap0,
+                //    _checkProgress, _threshold, false);
 
-                Elements[1].Matrix = new ObservableCollection<RectangleModel>(elements1);
+                //Elements[1].Matrix = new ObservableCollection<RectangleModel>(elements1);
             }
         }
 
