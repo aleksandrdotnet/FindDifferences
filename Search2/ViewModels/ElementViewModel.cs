@@ -11,7 +11,7 @@ using Point = System.Drawing.Point;
 
 namespace Search2.ViewModels
 {
-    public sealed class ElementViewModel : PropertyChangedBase
+    public sealed class ElementViewModel : PropertyChangedBase, IDisposable
     {
         private AreaRectangleModel _area = new AreaRectangleModel(new Point(), 0, 0);
         public AreaRectangleModel Area
@@ -136,14 +136,35 @@ namespace Search2.ViewModels
             return null;
         }
 
+        private bool _disposed;
+
+        private void Dispose(bool disposing)
+        {
+            if(_disposed)
+                return;
+
+            if (disposing)
+            {
+                if (IsChecked)
+                {
+                    MouseHook.Stop();
+                    MouseHook.MouseLeftButton -= MouseHook_MouseLeftButton;
+                    MouseHook.MouseMove -= MouseHook_MouseLeftMove;
+                }
+            }
+            // освобождаем неуправляемые объекты
+            _disposed = true;
+        }
+
+        ~ElementViewModel()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
-            if (IsChecked)
-            {
-                MouseHook.Stop();
-                MouseHook.MouseLeftButton -= MouseHook_MouseLeftButton;
-                MouseHook.MouseMove -= MouseHook_MouseLeftMove;
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

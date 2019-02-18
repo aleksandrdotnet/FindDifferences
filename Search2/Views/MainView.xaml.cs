@@ -1,4 +1,6 @@
-﻿using Search2.Util;
+﻿using System.Windows.Forms;
+using Caliburn.Micro;
+using Search2.Util;
 using Search2.ViewModels;
 
 namespace Search2.Views

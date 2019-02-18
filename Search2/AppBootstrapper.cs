@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Threading;
 using Caliburn.Micro;
@@ -26,10 +27,10 @@ namespace Search2
             _container = new SimpleContainer();
 
             _container.Instance(_container);
-
             _container.Singleton<IEventAggregator, EventAggregator>();
             _container.Singleton<IWindowManager, WindowManager>();
             _container.PerRequest<MainViewModel>();
+
         }
         protected override object GetInstance(Type service, string key)
         {

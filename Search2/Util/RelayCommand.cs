@@ -35,13 +35,9 @@ namespace Search2.Util
             DisplayText = displayText;
             _action = action;
         }
-        
-        
-
         #endregion
 
         #region ICommand Members
-
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
@@ -58,7 +54,6 @@ namespace Search2.Util
         {
             _execute(parameter);
         }
-
         #endregion
     }
 }

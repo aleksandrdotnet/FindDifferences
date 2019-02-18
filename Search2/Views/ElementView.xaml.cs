@@ -5,7 +5,6 @@ namespace Search2.Views
 {
     public partial class ElementView
     {
-
         public static readonly DependencyProperty BrushProperty = DependencyProperty.Register(
             "Brush", typeof(SolidColorBrush), typeof(ElementView), new PropertyMetadata(default(SolidColorBrush)));
 
